@@ -21,10 +21,10 @@ request(options, function (error, response, body) {
     body = JSON.parse(body);
     sData = JSON.stringify(body, 0, 4);
 
-    fs.writeFile("Routes_IDS.json", sData, 'utf8', function(err){
+    /*fs.writeFile("Routes_IDS.json", sData, 'utf8', function(err){
         if(err) {console.log(err);} else {console.log("Exported");}
 
-    })
+    })*/
     console.log(body);
     
 });
