@@ -1,8 +1,6 @@
 var fs = require("fs");
 var request = require("request");
 
-var Routes_IDS;
-
 var options = {
   method: 'GET',
   url: 'https://transloc-api-1-2.p.rapidapi.com/routes.json',
@@ -40,6 +38,3 @@ request(options, function (error, response, Routes_IDS) {
         });
     
 });
-
-
-
