@@ -4,8 +4,8 @@ var options = {
   method: 'GET',
   url: 'https://transloc-api-1-2.p.rapidapi.com/arrival-estimates.json',
   qs: {
-    routes: '4001186',//'4000421%2C4000592%2C4005122', ATM it is the 126
-    stops: '4094822',//'4094554',//Lakeside <- //'4094822',//'4002123%2C4023414%2C4021521', THE HUB atm
+    routes: '4001186',//'4010110',//'',//'4000421%2C4000592%2C4005122', ATM it is the 126
+    stops: '4093246',//'4090734',//'',//'4094554',//Lakeside <- //'4094822',//'4002123%2C4023414%2C4021521', THE HUB atm
     callback: 'call',
     agencies: '116' 
   },
@@ -19,12 +19,15 @@ request(options, function (error, response, body) {
 	if (error) throw new Error(error);
 
   body = JSON.parse(body);
+  console.log(body);
   let arr = body.data[0];
+  console.log(body.data);
+  console.log(body.data == null);
 
-if(!body.hasOwnProperty('arrivals')){
+if((body.data.length) === 0){
   console.log("RTS Bus is currently out of service");
   return;
-}
+}else{
 
   let a = arr.arrivals[0];
   let time = a.arrival_at; //11 characters
@@ -63,6 +66,7 @@ if(!body.hasOwnProperty('arrivals')){
 
  let finalETAinMins = Math.round(ETAinMins);
  console.log(finalETAinMins);
+}
 
 });
 
