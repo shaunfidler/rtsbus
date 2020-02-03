@@ -19,9 +19,26 @@ request(options, function (error, response, body) {
 	if (error) throw new Error(error);
 
     body = JSON.parse(body);
-    sData = JSON.stringify(body, 0, 4);
+    body = body.data["116"];
 
-    fs.writeFile("Routes_IDS.json", sData, 'utf8', function(err){
+    body.forEach(element => {
+      delete element.is_hidden;
+      delete element.type;
+      delete element.color;
+      delete element.stops;
+      delete element.long_name;
+      delete element.text_color;
+      delete element.agency_id;
+      delete element.segments;
+      delete element.url;
+      delete element.description;
+      delete element.is_active;
+    });
+    
+
+    sData = JSON.stringify(body);//, 0, 4);
+
+    fs.writeFile("RouteToID.json", sData, 'utf8', function(err){
         if(err) {console.log(err);} else {console.log("Exported");}
 
     })
