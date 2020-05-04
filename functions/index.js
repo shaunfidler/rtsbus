@@ -23,6 +23,7 @@ app.intent(FALLBACK_INTENT, (conv) => {
 app.intent(FAR_FROM_HOME, (conv) => {
   
   const busNum = conv.parameters.number;
+  console.log("Looking for bus #" + busNum)
 
   return new Promise( function(resolve, reject){
   axios({
@@ -63,11 +64,12 @@ app.intent(FAR_FROM_HOME, (conv) => {
         }
         })
         .then((res)=>{
-            let arr = res.data.data[0];
-            if(!arr){
+            if(res.data.data === undefined || res.data.data.length === 0){
+                console.log("RTS Bus is currently out of service");
                 conv.ask("RTS Bus is currently out of service");
+                resolve();
             }else{
-            
+                let arr = res.data.data[0];
                 let a = arr.arrivals[0];
                 let time = a.arrival_at; //11 characters
                 console.log(time)
@@ -105,7 +107,7 @@ app.intent(FAR_FROM_HOME, (conv) => {
                 console.log("BUS: " + busTotal + " US: " + usTotal)
 
                 let ETAinMins = busTotal - usTotal;
-                console.log(ETAinMins)
+                console.log(`The estimated time of arrival is ${ETAinMins} minutes`)
                 conv.ask(`The estimated time of arrival is ${ETAinMins} minutes`);
                 resolve();
             }
